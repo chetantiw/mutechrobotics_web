@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Event - MuTech Robotics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .admin-container {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .admin-form label {
+            font-weight: bold;
+        }
+        .admin-form input, .admin-form textarea {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .admin-form input[type="submit"] {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .admin-form input[type="submit"]:hover {
+            background-color: var(--secondary-color);
+        }
+        .flash-message {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        .flash-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Edit Event</h1>
+        <p><a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a></p>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="admin-form">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{ event.title }}" required>
+
+            <label for="tagline">Tagline:</label>
+            <input type="text" id="tagline" name="tagline" value="{{ event.tagline if event.tagline else '' }}">
+
+            <label for="overview">Overview:</label>
+            <textarea id="overview" name="overview" required>{{ event.overview }}</textarea>
+
+            <label for="slug">Slug:</label>
+            <input type="text" id="slug" name="slug" value="{{ event.slug }}" required>
+
+            <label for="event_date">Event Date:</label>
+            <input type="date" id="event_date" name="event_date" value="{{ event.event_date if event.event_date else '' }}" required>
+
+            <label for="event_time">Event Time:</label>
+            <input type="time" id="event_time" name="event_time" value="{{ event.event_time[:5] if event.event_time else '' }}" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" value="{{ event.location }}" required>
+
+            <label for="duration">Duration:</label>
+            <input type="text" id="duration" name="duration" value="{{ event.duration if event.duration else '' }}">
+
+            <label for="cost">Cost:</label>
+            <input type="text" id="cost" name="cost" value="{{ event.cost if event.cost else '' }}">
+
+            <label for="learn">What You'll Learn (comma-separated):</label>
+            <input type="text" id="learn" name="learn" value="{{ event.learn|join(', ') if event.learn else '' }}">
+
+            <input type="submit" value="Update Event">
+        </form>
+    </div>
+</body>
+</html>

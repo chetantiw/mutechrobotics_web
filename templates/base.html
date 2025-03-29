@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - MuTech Robotics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _scheme='https') }}">
+</head>
+<body>
+    <header>
+       
+        <div class="logo-container">
+            <!-- <div class="logo-placeholder">mr_logo.png</div> -->
+            <img src="{{ url_for('static', filename='images/mr_logo.png', _scheme='https') }}" alt="MuTech Robotics Logo" class="logo">
+            <h1 class="site-title">MuTech Robotics</h1>
+        </div>
+        <nav>
+           
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('events') }}">Events</a></li>
+                <li><a href="{{ url_for('tutorials') }}">Tutorials</a></li>
+                <li><a href="{{ url_for('blog') }}">Blogs</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About MuTech Robotics</h3>
+                    <p>A community dedicated to making robotics accessible to everyone through tutorials, blogs, and events.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">F</a>
+                        <a href="#" class="social-icon">T</a>
+                        <a href="#" class="social-icon">I</a>
+                        <a href="#" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/" class="active">Home</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Getting Started</a></li>
+                        <li><a href="#">Component Guide</a></li>
+                        <li><a href="#">Programming Resources</a></li>
+                        <li><a href="#">Download Center</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: info@mutechrobotics.com</li>
+                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Tech Avenue, Innovation City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 MuTech Robotics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MuTech Robotics offers tutorials, blogs, and events to make robotics accessible to everyone.">
+    <meta name="keywords" content="robotics, tutorials, blogs, events, MuTech Robotics">
+    <meta name="author" content="MuTech Robotics">
+    <meta property="og:title" content="MuTech Robotics">
+    <meta property="og:description" content="A community dedicated to making robotics accessible through tutorials, blogs, and events.">
+    <meta property="og:image" content="{{ url_for('static', filename='images/mr_logo.png', _scheme='https') }}">
+    <meta property="og:url" content="https://www.mutechrobotics.com">
+    <meta property="og:type" content="website">
+    <title>MuTech Robotics - Tutorials, Blogs & Events</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _scheme='https') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/mr_logo.png', _scheme='https') }}" alt="MuTech Robotics Logo" class="logo">
+                    <h1 class="site-title">MuTech Robotics</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="/" class="active">Home</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <h1>Explore the World of Robotics</h1>
+            <p>Join the MuTech Robotics community to learn, create, and innovate with tutorials, blogs, events, and resources for all levels of robotics enthusiasts.</p>
+            <a href="#tutorials" class="cta-button">Start Learning</a>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">What We Offer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">T</div>
+                    <h3>In-Depth Tutorials</h3>
+                    <p>Step-by-step guides for building robots, programming microcontrollers, and implementing sensors for projects of all difficulty levels.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">B</div>
+                    <h3>Insightful Blogs</h3>
+                    <p>Stay updated with the latest in robotics technology, industry trends, and innovative projects from our community members.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">E</div>
+                    <h3>Engaging Events</h3>
+                    <p>Join workshops, competitions, and meetups to connect with fellow robotics enthusiasts and showcase your creations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="latest-content" id="tutorials">
+        <div class="container">
+            <h2 class="section-title">Latest Tutorials</h2>
+            <div class="content-grid">
+                {% if latest_tutorials %}
+                    {% for tutorial in latest_tutorials %}
+                        <div class="content-card">
+                            <div class="card-image" style="background-image: url('{{ tutorial.image_url or '/api/placeholder/600/400' }}')"></div>
+                            <div class="card-content">
+                                <h3>{{ tutorial.title }}</h3>
+                                <p>{{ tutorial.overview }}</p>
+                                <a href="{{ url_for('tutorial_details', slug=tutorial.slug) }}" class="read-more">Read Tutorial →</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No tutorials available at the moment. Check back later!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    
+    <section class="latest-content" id="blog">
+        <div class="container">
+            <h2 class="section-title">Latest Blog Posts</h2>
+            <div class="content-grid">
+                {% if latest_blogs %}
+                    {% for blog in latest_blogs %}
+                        <div class="content-card">
+                            <div class="card-image" style="background-image: url('{{ blog.image_url or '/api/placeholder/600/400' }}')"></div>
+                            <div class="card-content">
+                                <h3>{{ blog.title }}</h3>
+                                <p>{{ blog.overview }}</p>
+                                <a href="{{ url_for('blog_details', slug=blog.slug) }}" class="read-more">Read Post →</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No blog posts available at the moment. Check back later!</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    
+    <section class="events" id="events">
+        <div class="container">
+            <h2 class="section-title">Upcoming Events</h2>
+            {% if upcoming_events %}
+                <div class="event-list">
+                    {% for event in upcoming_events %}
+                        <div class="event-card">
+                            <div class="event-date">
+                                <span class="month">{{ event.event_date.strftime('%b').upper() }}</span>
+                                <span class="day">{{ event.event_date.day }}</span>
+                                <span class="year">{{ event.event_date.year }}</span>
+                            </div>
+                            <div class="event-details">
+                                <h3>{{ event.title }}</h3>
+                                <p>{{ event.overview }}</p>
+                                <p><strong>Location:</strong> {{ event.location }}</p>
+                                <p><strong>Cost:</strong> ${{ event.cost }}</p>
+                                <a href="{{ url_for('event_details', slug=event.slug) }}" class="read-more">Register Now →</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No upcoming events at the moment. Check back later!</p>
+            {% endif %}
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2>Join Our Robotics Community Today</h2>
+            <p>Get access to exclusive tutorials, connect with fellow enthusiasts, and stay updated on the latest events.</p>
+            <a href="#" class="cta-button">Sign Up Now</a>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About MuTech Robotics</h3>
+                    <p>A community dedicated to making robotics accessible to everyone through tutorials, blogs, and events.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">F</a>
+                        <a href="#" class="social-icon">T</a>
+                        <a href="#" class="social-icon">I</a>
+                        <a href="#" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/" class="active">Home</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Getting Started</a></li>
+                        <li><a href="#">Component Guide</a></li>
+                        <li><a href="#">Programming Resources</a></li>
+                        <li><a href="#">Download Center</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: info@mutechrobotics.com</li>
+                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Tech Avenue, Innovation City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 MuTech Robotics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

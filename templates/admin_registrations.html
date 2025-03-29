@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin - Registrations{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Event Registrations</h1>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Event</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact Number</th>
+                    <th>Payment Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reg in registrations %}
+                    <tr>
+                        <td>{{ reg.id }}</td>
+                        <td>{{ reg.event_title }}</td>
+                        <td>{{ reg.name }}</td>
+                        <td>{{ reg.email }}</td>
+                        <td>{{ reg.contact_number }}</td>
+                        <td>{{ reg.payment_status }}</td>
+                        <td>
+                            {% if reg.payment_status == 'pending_verification' %}
+                                <form action="{{ url_for('update_registration_status', registration_id=reg.id, status='confirmed') }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-success">Confirm</button>
+                                </form>
+                                <form action="{{ url_for('update_registration_status', registration_id=reg.id, status='failed') }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger">Reject</button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

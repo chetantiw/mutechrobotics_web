@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}UPI Payment{% endblock %}
+
+{% block content %}
+    <div class="registration-container">
+        <h1>UPI Payment for {{ event.title }}</h1>
+
+        <div class="event-meta">
+            <p><strong>Date:</strong> {{ event.event_date }}</p>
+            <p><strong>Time:</strong> {{ event.event_time[:5] if event.event_time else 'N/A' }}</p>
+            <p><strong>Location:</strong> {{ event.location }}</p>
+            <p><strong>Cost:</strong> ${{ event.cost }}</p>
+        </div>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+
+                <!-- Show QR codes -->
+                {% if 'success' in messages|map(attribute='0')|list %}
+                    <h3>Step 1: Scan the UPI QR Code to Make the Payment</h3>
+                    <img src="{{ upi_qr_path }}" alt="UPI QR Code" style="max-width: 300px;">
+
+                    <h3>Step 2: Share Your Payment Screenshot via WhatsApp</h3>
+                    <p>After making the payment, take a screenshot of the payment confirmation and share it with us via WhatsApp to confirm your registration.</p>
+                    <p><strong>Registration ID:</strong> {{ registration_id }}</p>
+                    <p>Open your whatsapp app and scan the WhatsApp QR code below to open a chat with us (the message is pre-filled with your Registration ID):</p>
+                    <img src="{{ whatsapp_qr_path }}" alt="WhatsApp QR Code" style="max-width: 300px;">
+                    <p>Alternatively, you can <a href="{{ whatsapp_link }}" target="_blank">click here</a> to open WhatsApp.</p>
+                {% endif %}
+            {% endif %}
+        {% endwith %}
+
+        <p><a href="{{ url_for('event_details', slug=event.slug) }}" class="back-link">Back to Event Details</a></p>
+    </div>
+{% endblock %}

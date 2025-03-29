@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuTech Robotics - Events</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _scheme='https') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/mr_logo.png', _scheme='https') }}" alt="MuTech Robotics Logo" class="logo">
+                    <h1 class="site-title">MuTech Robotics</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li> 
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events" class="active">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <h1>Upcoming Events</h1>
+            <p>Join us for workshops, competitions, and webinars to enhance your robotics skills.</p>
+            <a href="#all-events" class="cta-button">View Events</a>
+        </div>
+    </section>
+
+    <section class="events" id="all-events">
+        <div class="container">
+            <h2 class="section-title">Event Schedule</h2>
+            {% for event in events %}
+            <div class="event-card">
+                <div class="event-date">
+                    <span class="month">{{ event.event_date.strftime('%b').upper() }}</span>
+                    <span class="day">{{ event.event_date.day }}</span>
+                    <span class="year">{{ event.event_date.year }}</span>
+                </div>
+                <div class="event-details">
+                    <h3>{{ event.title }}</h3>
+                    <p>{{ event.tagline }}</p>
+                    <p><strong>Location:</strong> {{ event.location }}</p>
+                    <a href="{{ url_for('event_details', slug=event.slug) }}" class="read-more">Learn More →</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About MuTech Robotics</h3>
+                    <p>A community dedicated to making robotics accessible to everyone.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">F</a>
+                        <a href="#" class="social-icon">T</a>
+                        <a href="#" class="social-icon">I</a>
+                        <a href="#" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events" class="active">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: <a href="mailto:info@mutechrobotics.com">info@mutechrobotics.com</a></li>
+                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Tech Avenue, Innovation City</li>
+                        <li>WhatsApp: <a href="https://wa.me/919301921013" target="_blank">+91 93019 21013</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 MuTech Robotics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

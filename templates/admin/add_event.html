@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuTech Robotics - Add Event</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .form-container {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-container h1 {
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group textarea {
+            height: 150px;
+        }
+        .form-group input[type="submit"] {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add New Event</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="tagline">Tagline</label>
+                <input type="text" id="tagline" name="tagline" required>
+            </div>
+            <div class="form-group">
+                <label for="overview">Overview</label>
+                <textarea id="overview" name="overview" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="slug">Slug (e.g., event-name)</label>
+                <input type="text" id="slug" name="slug" required>
+            </div>
+            <div class="form-group">
+                <label for="event_date">Event Date (YYYY-MM-DD)</label>
+                <input type="date" id="event_date" name="event_date" required>
+            </div>
+            <div class="form-group">
+                <label for="event_time">Event Time (HH:MM)</label>
+                <input type="time" id="event_time" name="event_time" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" required>
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration (e.g., 2 hours)</label>
+                <input type="text" id="duration" name="duration" required>
+            </div>
+            <div class="form-group">
+                <label for="cost">Cost (e.g., $50 or Free)</label>
+                <input type="text" id="cost" name="cost" required>
+            </div>
+            <div class="form-group">
+                <label for="learn">What You'll Learn (comma-separated list)</label>
+                <input type="text" id="learn" name="learn" placeholder="e.g., Motor control basics, Wiring techniques" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Event">
+            </div>
+        </form>
+        <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuTech Robotics - Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _scheme='https') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/mr_logo.png', _scheme='https') }}" alt="MuTech Robotics Logo" class="logo">
+                    <h1 class="site-title">MuTech Robotics</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog" class="active">Blog</a></li>
+                        <li><a href="/events">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <h1>Robotics Blog</h1>
+            <p>Stay updated with the latest trends and insights in robotics.</p>
+            <a href="#all-posts" class="cta-button">Read Posts</a>
+        </div>
+    </section>
+
+    <section class="latest-content" id="all-posts">
+        <div class="container">
+            <h2 class="section-title">Latest Blog Posts</h2>
+            <div class="content-grid">
+                {% for blog in blogs %}
+                <div class="content-card">
+                    <div class="card-image" style="background-image: url('/api/placeholder/600/400')"></div>
+                    <div class="card-content">
+                        <h3>{{ blog.title }}</h3>
+                        <p>{{ blog.tagline }}</p>
+                        <p><strong>Author:</strong> {{ blog.author }} | <strong>Date:</strong> {{ blog.published_date }}</p>
+                        <a href="{{ url_for('blog_details', slug=blog.slug) }}" class="read-more">Read More →</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About MuTech Robotics</h3>
+                    <p>A community dedicated to making robotics accessible to everyone.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">F</a>
+                        <a href="#" class="social-icon">T</a>
+                        <a href="#" class="social-icon">I</a>
+                        <a href="#" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: <a href="mailto:info@mutechrobotics.com">info@mutechrobotics.com</a></li>
+                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Tech Avenue, Innovation City</li>
+                        <li>WhatsApp: <a href="https://wa.me/919301921013" target="_blank">+91 93019 21013</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 MuTech Robotics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

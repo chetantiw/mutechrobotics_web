@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuTech Robotics - Edit Tutorial</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        .form-container {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .form-container h1 {
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group textarea {
+            height: 150px;
+        }
+        .form-group input[type="submit"] {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Edit Tutorial</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" value="{{ tutorial.title }}" required>
+            </div>
+            <div class="form-group">
+                <label for="tagline">Tagline</label>
+                <input type="text" id="tagline" name="tagline" value="{{ tutorial.tagline }}" required>
+            </div>
+            <div class="form-group">
+                <label for="overview">Overview</label>
+                <textarea id="overview" name="overview" required>{{ tutorial.overview }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="slug">Slug</label>
+                <input type="text" id="slug" name="slug" value="{{ tutorial.slug }}" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Beginner" {% if tutorial.category == 'Beginner' %}selected{% endif %}>Beginner</option>
+                    <option value="Intermediate" {% if tutorial.category == 'Intermediate' %}selected{% endif %}>Intermediate</option>
+                    <option value="Advanced" {% if tutorial.category == 'Advanced' %}selected{% endif %}>Advanced</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="difficulty">Difficulty</label>
+                <select id="difficulty" name="difficulty" required>
+                    <option value="Easy" {% if tutorial.difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                    <option value="Medium" {% if tutorial.difficulty == 'Medium' %}selected{% endif %}>Medium</option>
+                    <option value="Hard" {% if tutorial.difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="estimated_time">Estimated Time</label>
+                <input type="text" id="estimated_time" name="estimated_time" value="{{ tutorial.estimated_time }}" required>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Update Tutorial">
+            </div>
+        </form>
+        <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuTech Robotics - {{ tutorial.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _scheme='https') }}">
+    <style>
+        /* Additional styles for tutorial details */
+        .tutorial-detail-section {
+            padding: 4rem 0;
+            background-color: var(--white);
+        }
+        .tutorial-detail-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        .tutorial-main {
+            flex: 2;
+            min-width: 300px;
+        }
+        .tutorial-sidebar {
+            flex: 1;
+            min-width: 250px;
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--secondary-color);
+        }
+        .tutorial-main h2 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        .tutorial-main p {
+            color: var(--medium-gray);
+            margin-bottom: 1.5rem;
+        }
+        .tutorial-sidebar h3 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        .tutorial-sidebar p {
+            color: var(--medium-gray);
+            margin-bottom: 1rem;
+        }
+        .tutorial-meta {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        @media (max-width: 768px) {
+            .tutorial-detail-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <img src="{{ url_for('static', filename='images/mr_logo.png', _scheme='https') }}" alt="MuTech Robotics Logo" class="logo">
+                    <h1 class="site-title">MuTech Robotics</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/tutorials" class="active">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <h1>{{ tutorial.title }}</h1>
+            <p>{{ tutorial.tagline }}</p>
+            <a href="#start-tutorial" class="cta-button">Start Tutorial</a>
+        </div>
+    </section>
+
+    <section class="tutorial-detail-section">
+        <div class="container">
+            <div class="tutorial-detail-container">
+                <div class="tutorial-main">
+                    <h2>Tutorial Overview</h2>
+                    <p>{{ tutorial.overview }}</p>
+                    <!-- Add more tutorial content here as needed -->
+                </div>
+                <div class="tutorial-sidebar">
+                    <h3>Tutorial Details</h3>
+                    <p><span class="tutorial-meta">Category:</span> {{ tutorial.category }}</p>
+                    <p><span class="tutorial-meta">Difficulty:</span> {{ tutorial.difficulty }}</p>
+                    <p><span class="tutorial-meta">Estimated Time:</span> {{ tutorial.estimated_time }}</p>
+                    <a href="#start-tutorial" class="cta-button" id="start-tutorial">Start Tutorial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About MuTech Robotics</h3>
+                    <p>A community dedicated to making robotics accessible to everyone.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon">F</a>
+                        <a href="#" class="social-icon">T</a>
+                        <a href="#" class="social-icon">I</a>
+                        <a href="#" class="social-icon">Y</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/tutorials">Tutorials</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                        <li><a href="/events">Events</a></li>
+                        <li><a href="/resources">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: <a href="mailto:info@mutechrobotics.com">info@mutechrobotics.com</a></li>
+                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Tech Avenue, Innovation City</li>
+                        <li>WhatsApp: <a href="https://wa.me/919301921013" target="_blank">+91 93019 21013</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 MuTech Robotics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
