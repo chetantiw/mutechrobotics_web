@@ -129,7 +129,7 @@
                                 <h3>{{ event.title }}</h3>
                                 <p>{{ event.overview }}</p>
                                 <p><strong>Location:</strong> {{ event.location }}</p>
-                                <p><strong>Cost:</strong> ${{ event.cost }}</p>
+                                <p><strong>Cost:</strong> {{ event.cost }}</p>
                                 <a href="{{ url_for('event_details', slug=event.slug) }}" class="read-more">Register Now →</a>
                             </div>
                         </div>

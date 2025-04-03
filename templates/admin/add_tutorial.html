@@ -42,12 +42,18 @@
         .form-group input[type="submit"]:hover {
             background-color: var(--secondary-color);
         }
+        .section {
+            margin-bottom: 1.5rem;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
     <div class="form-container">
         <h1>Add New Tutorial</h1>
-        <form method="POST">
+        <form method="POST" action="{{ url_for('add_tutorial') }}" id="add-tutorial-form">
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" required>
@@ -85,10 +91,65 @@
                 <input type="text" id="estimated_time" name="estimated_time" required>
             </div>
             <div class="form-group">
+                <label for="sections">Tutorial Sections</label>
+                <div id="sections-container">
+                    <div class="section">
+                        <label>Section Title</label>
+                        <input type="text" name="section_titles[]" required>
+                        <label>Section HTML Content</label>
+                        <textarea class="rich-text-editor" name="section_html_contents[]" required></textarea>
+                        <label>Section Order</label>
+                        <input type="number" name="section_orders[]" min="1" required>
+                    </div>
+                </div>
+                <button type="button" id="add-section">Add Section</button>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Add Tutorial">
             </div>
         </form>
         <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
     </div>
+    <script src="https://cdn.tiny.cloud/1/{{ tiny_mce_api_key }}/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        function initializeTinyMCE() {
+            tinymce.init({
+                selector: '.rich-text-editor',
+                plugins: 'link image lists',
+                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image',
+                menubar: false,
+                setup: function (editor) {
+                    editor.on('change', function () {
+                        editor.save(); // Ensure the content is saved back to the textarea
+                    });
+                }
+            });
+        }
+
+        initializeTinyMCE();
+
+        document.getElementById('add-section').addEventListener('click', function () {
+            const container = document.getElementById('sections-container');
+            const section = document.createElement('div');
+            section.classList.add('section');
+            section.innerHTML = `
+                <label>Section Title</label>
+                <input type="text" name="section_titles[]" required>
+                <label>Section HTML Content</label>
+                <textarea class="rich-text-editor" name="section_html_contents[]" required></textarea>
+                <label>Section Order</label>
+                <input type="number" name="section_orders[]" min="1" required>
+            `;
+            container.appendChild(section);
+
+            // Re-initialize TinyMCE for the new textarea
+            tinymce.remove('.rich-text-editor'); // Remove existing TinyMCE instances
+            initializeTinyMCE(); // Re-initialize TinyMCE
+        });
+
+        document.getElementById('add-tutorial-form').addEventListener('submit', function (event) {
+            console.log("Form submitted");
+        });
+    </script>
 </body>
 </html>

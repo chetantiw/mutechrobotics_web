@@ -1,5 +1,4 @@
-
-        :root {
+:root {
             --primary-color: #cc0000; /* Pure Red instead of orange-red */
             --secondary-color: #d9d9d9; /* Silver/Light Gray */
             --dark-color: #212529; /* Dark Gray/Black */
@@ -46,6 +45,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem; /* Ensure consistent spacing between logo, heading, and menu */
         }
         
         .logo-container {
@@ -435,6 +435,7 @@
             .header-content {
                 flex-direction: column;
                 text-align: center;
+                gap: 1rem; /* Adjust spacing for mobile view */
             }
             
             .logo-container {
@@ -459,5 +460,44 @@
                 width: 100%;
                 padding: 1rem;
             }
+
+            .menu-wrapper {
+                margin-top: 1rem; /* Increase spacing for better readability */
+            }
         }
-    
+
+.menu-wrapper {
+    display: flex;
+    align-items: center; /* Align menu with logo and heading */
+    margin-top: 0.5rem; /* Adjust spacing between heading and menu */
+}
+
+.heading-style {
+    font-family: 'Arial, sans-serif';
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.menu-style {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.menu-style li a {
+    text-decoration: none;
+    font-family: 'Arial, sans-serif';
+    font-size: 1rem;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.menu-style li a.active,
+.menu-style li a:hover {
+    color: #000;
+    font-weight: bold;
+}

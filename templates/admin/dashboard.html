@@ -64,6 +64,15 @@
         .admin-section .cta-button:hover {
             background-color: var(--secondary-color);
         }
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
     </style>
 </head>
 <body>
@@ -80,7 +89,14 @@
             {% endif %}
         {% endwith %}
 
-        <!-- Events Section -->
+        <!-- TinyMCE API Key Warning -->
+        {% if not tiny_mce_api_key or tiny_mce_api_key == 'no-api-key' %}
+        <div class="alert alert-warning">
+            <strong>Warning:</strong> TinyMCE is using a default API key. Please update the API key to avoid interruptions. 
+            <a href="https://www.tiny.cloud/" target="_blank">Get a valid API key here</a>.
+        </div>
+        {% endif %}
+
         <!-- Events Section -->
         <div class="admin-section">
             <h2>Events</h2>
@@ -206,7 +222,6 @@
             </table>
         </div>
 
-        <!-- Contact Messages Section -->
         <!-- Contact Messages Section -->
         <div class="admin-section">
             <h2>Contact Messages</h2>

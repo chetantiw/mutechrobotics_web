@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuTech Robotics - {{ tutorial.title }}</title>
+    <meta name="description" content="MuTech Robotics offers tutorials, blogs, and events to make robotics accessible to everyone.">
+    <meta name="keywords" content="robotics, tutorials, blogs, events, MuTech Robotics">
+    <meta name="author" content="MuTech Robotics">
+    <meta property="og:title" content="MuTech Robotics">
+    <meta property="og:description" content="A community dedicated to making robotics accessible through tutorials, blogs, and events.">
+    <meta property="og:image" content="{{ url_for('static', filename='images/mr_logo.png', _scheme='https') }}">
+    <meta property="og:url" content="https://www.mutechrobotics.com">
+    <meta property="og:type" content="website">
+    <title>MuTech Robotics - Tutorials, Blogs & Events</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css', _scheme='https') }}">
     <style>
         /* Additional styles for tutorial details */
@@ -16,14 +25,15 @@
             flex-wrap: wrap;
             gap: 2rem;
             align-items: flex-start;
+            justify-content: space-between; /* Ensure proper spacing between columns */
         }
         .tutorial-main {
-            flex: 2;
-            min-width: 300px;
+            flex: 3; /* Increase the width of the main content */
+            min-width: 400px; /* Ensure a wider minimum width */
         }
         .tutorial-sidebar {
-            flex: 1;
-            min-width: 250px;
+            flex: 0.8; /* Reduce the width of the left column */
+            min-width: 200px; /* Adjust the minimum width */
             background-color: var(--light-bg);
             padding: 1.5rem;
             border-radius: 8px;
@@ -38,6 +48,13 @@
             color: var(--medium-gray);
             margin-bottom: 1.5rem;
         }
+        .tutorial-main ul {
+            list-style: disc;
+            padding-left: 2rem; /* Add padding to indent bullet points */
+        }
+        .tutorial-main ul li {
+            margin-bottom: 0.5rem; /* Add spacing between list items */
+        }
         .tutorial-sidebar h3 {
             color: var(--dark-color);
             margin-bottom: 1rem;
@@ -50,9 +67,59 @@
             font-weight: bold;
             color: var(--primary-color);
         }
+        .progress-bar {
+            background-color: var(--light-gray);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            height: 10px;
+            position: sticky; /* Use sticky positioning */
+            top: 10%; /* Position it near the top of the viewport */
+            left: 0; /* Align it properly in the left column */
+            width: 200px; /* Set a fixed width */
+            z-index: 1000; /* Ensure it stays above other elements */
+        }
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        .progress-container {
+            position: sticky;
+            top: 10%; /* Position it near the top of the viewport */
+            left: 0;
+            width: 200px;
+            z-index: 1000;
+            text-align: center; /* Center align the percentage text */
+        }
+        .progress-percentage {
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .table-of-contents {
+            margin: 2rem 0;
+        }
+        .table-of-contents h3 {
+            margin-bottom: 1rem;
+        }
+        .table-of-contents ul {
+            list-style: none;
+            padding: 0;
+        }
+        .table-of-contents ul li {
+            margin-bottom: 0.5rem;
+        }
+        .table-of-contents ul li a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .table-of-contents ul li a:hover {
+            text-decoration: underline;
+        }
         @media (max-width: 768px) {
             .tutorial-detail-container {
-                flex-direction: column;
+                flex-direction: column; /* Keep mobile responsiveness */
             }
         }
     </style>
@@ -91,21 +158,85 @@
     <section class="tutorial-detail-section">
         <div class="container">
             <div class="tutorial-detail-container">
+                <!-- Left column: Table of contents -->
+                <div class="tutorial-sidebar">
+                    <h3>Table of Contents</h3>
+                    <ul>
+                        {% for section in tutorial.sections %}
+                        <li>
+                            <a href="#section-{{ loop.index }}" class="toc-link">{{ section.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <!-- Progress bar with percentage -->
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" id="progress"></div>
+                        </div>
+                        <div class="progress-percentage" id="progress-percentage">0%</div>
+                    </div>
+                </div>
+
+                <!-- Right column: Tutorial content -->
                 <div class="tutorial-main">
                     <h2>Tutorial Overview</h2>
                     <p>{{ tutorial.overview }}</p>
-                    <!-- Add more tutorial content here as needed -->
+                    <!-- Tutorial content -->
+                    {% for section in tutorial.sections %}
+                    <div id="section-{{ loop.index }}" class="tutorial-section">
+                        <h3>{{ section.title }}</h3>
+                        <div>{{ section.html_content|safe }}</div>
+                    </div>
+                    {% endfor %}
                 </div>
+
+                <!-- Tutorial details card -->
                 <div class="tutorial-sidebar">
                     <h3>Tutorial Details</h3>
                     <p><span class="tutorial-meta">Category:</span> {{ tutorial.category }}</p>
                     <p><span class="tutorial-meta">Difficulty:</span> {{ tutorial.difficulty }}</p>
                     <p><span class="tutorial-meta">Estimated Time:</span> {{ tutorial.estimated_time }}</p>
-                    <a href="#start-tutorial" class="cta-button" id="start-tutorial">Start Tutorial</a>
+                    <!-- Related Tutorials -->
+                    <h3>Related Tutorials</h3>
+                    <ul>
+                        {% for related in related_tutorials %}
+                        <li>
+                            <a href="{{ url_for('tutorial_details', slug=related.slug) }}">
+                                <img src="{{ related.thumbnail_url }}" alt="{{ related.title }}" style="width: 50px; height: 50px; margin-right: 10px;">
+                                {{ related.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
+    <script>
+        let lastScrollPosition = 0; // Track the last scroll position
+
+        document.addEventListener('scroll', function () {
+            const progress = document.getElementById('progress');
+            const progressPercentageText = document.getElementById('progress-percentage');
+            const heroHeight = document.querySelector('.hero').offsetHeight; // Get the height of the hero section
+            const totalHeight = document.body.scrollHeight - window.innerHeight - heroHeight; // Exclude hero section
+            const currentScrollPosition = Math.max(window.scrollY - heroHeight, 0); // Start progress after hero section
+
+            // Only update progress if scrolling down
+            if (currentScrollPosition > lastScrollPosition) {
+                const progressPercentage = Math.min((currentScrollPosition / totalHeight) * 100, 100); // Cap progress at 100%
+                progress.style.width = progressPercentage + '%';
+                progressPercentageText.textContent = progressPercentage.toFixed(0) + '%';
+
+                // Show "Tutorial Completed" when progress reaches 100%
+                if (progressPercentage === 100) {
+                    progressPercentageText.textContent = "Tutorial Completed";
+                }
+            }
+
+            lastScrollPosition = currentScrollPosition; // Update the last scroll position
+        });
+    </script>
 
     <footer id="contact">
         <div class="container">
